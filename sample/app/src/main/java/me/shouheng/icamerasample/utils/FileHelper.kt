@@ -6,12 +6,15 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
+import me.shouheng.icamera.util.FileUtils
+import me.shouheng.icamera.util.L
+import me.shouheng.icamera.util.PathUtils
 import me.shouheng.icamerasample.BuildConfig
 import me.shouheng.icamerasample.R
-import me.shouheng.utils.app.ResUtils
-import me.shouheng.utils.stability.L
-import me.shouheng.utils.store.FileUtils
-import me.shouheng.utils.store.PathUtils
+//import me.shouheng.utils.app.ResUtils
+//import me.shouheng.utils.stability.L
+//import me.shouheng.utils.store.FileUtils
+//import me.shouheng.utils.store.PathUtils
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -35,8 +38,8 @@ object FileHelper {
         context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, getUriFromFile(context, file)))
     }
 
-    fun getSavedFile(appendix: String): File {
-        val appDir = File(PathUtils.getExternalPicturesPath(), ResUtils.getString(R.string.app_name))
+    fun getSavedFile(context: Context,appendix: String): File {
+        val appDir = File(PathUtils.getExternalPicturesPath(), context.getString(R.string.app_name))
         FileUtils.createOrExistsDir(appDir.path)
         val fileName = "${System.currentTimeMillis()}.${appendix}"
         return File(appDir, fileName)

@@ -1,4 +1,4 @@
-//package me.shouheng.icamerasample.camera
+package me.shouheng.icamerasample.camera
 //
 //import android.content.Context
 //import android.graphics.SurfaceTexture

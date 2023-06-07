@@ -1,6 +1,7 @@
 package me.shouheng.icamerasample.activity
 
 import android.animation.Animator
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.core.view.ViewCompat
@@ -8,6 +9,8 @@ import androidx.appcompat.widget.PopupMenu
 import android.view.Gravity
 import android.view.View
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import me.shouheng.icamera.config.ConfigurationProvider
 import me.shouheng.icamera.config.size.Size
 import me.shouheng.icamera.config.size.SizeMap
@@ -16,8 +19,10 @@ import me.shouheng.icamera.enums.CameraSizeFor
 import me.shouheng.icamera.enums.FlashMode
 import me.shouheng.icamera.enums.MediaType
 import me.shouheng.icamera.listener.*
+import me.shouheng.icamera.util.BarUtils
 import me.shouheng.icamera.util.CameraHelper
 import me.shouheng.icamera.util.ImageHelper
+import me.shouheng.icamera.util.L
 import me.shouheng.icamerasample.R
 import me.shouheng.icamerasample.databinding.ActivityCameraBinding
 import me.shouheng.icamerasample.utils.FileHelper.getSavedFile
@@ -27,10 +32,8 @@ import me.shouheng.utils.ktx.dp2px
 import me.shouheng.utils.ktx.invisible
 import me.shouheng.utils.ktx.onDebouncedClick
 import me.shouheng.utils.ktx.stringOf
-import me.shouheng.utils.stability.L
-import me.shouheng.utils.ui.BarUtils
-import me.shouheng.vmlib.base.CommonActivity
-import me.shouheng.vmlib.comn.EmptyViewModel
+//import me.shouheng.utils.L
+//import me.shouheng.utils.BarUtils
 import java.io.File
 
 /**
@@ -39,14 +42,22 @@ import java.io.File
  * @author WngShhng (shouheng2015@gmail.com)
  * @version 2019/4/13 22:22
  */
-class CameraActivity : CommonActivity<EmptyViewModel, ActivityCameraBinding>() {
-
-    override fun getLayoutResId(): Int = R.layout.activity_camera
+//class CameraActivity : CommonActivity<EmptyViewModel, ActivityCameraBinding>() {
+class CameraActivity : BaseActivity() {
+//    CommonActivity<EmptyViewModel, ActivityCameraBinding>()
+//    override fun getLayoutResId(): Int = R.layout.activity_camera
+    protected val context: Context
+        get() = this
 
     /** Is currently recording video. */
     private var isCameraRecording = false
+    private val binding by lazy {
+        ActivityCameraBinding.inflate(layoutInflater)
+    }
 
-    override fun doCreateView(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
         L.d("doCreateView")
         BarUtils.setStatusBarLightMode(window, false)
         configDrawer()
@@ -75,7 +86,7 @@ class CameraActivity : CommonActivity<EmptyViewModel, ActivityCameraBinding>() {
     }
 
     private fun configMain() {
-        binding.ivSetting.onDebouncedClick { binding.drawer.openDrawer(Gravity.END) }
+        binding.ivSetting.onDebouncedClick { binding.drawer.openDrawer(GravityCompat.END) }
         binding.ivFlash.setImageResource(
             when(ConfigurationProvider.get().defaultFlashMode) {
                 FlashMode.FLASH_AUTO -> R.drawable.ic_flash_auto_white_24dp
@@ -105,13 +116,13 @@ class CameraActivity : CommonActivity<EmptyViewModel, ActivityCameraBinding>() {
         binding.sb.animate()
             .translationX(130f.dp2px().toFloat())
             .setListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(animation: Animator?) { /*noop*/ }
+                override fun onAnimationRepeat(animation: Animator) { /*noop*/ }
 
-                override fun onAnimationEnd(animation: Animator?) { binding.sb.invisible() }
+                override fun onAnimationEnd(animation: Animator) { binding.sb.invisible() }
 
-                override fun onAnimationCancel(animation: Animator?) { /*noop*/ }
+                override fun onAnimationCancel(animation: Animator) { /*noop*/ }
 
-                override fun onAnimationStart(animation: Animator?) { /*noop*/ }
+                override fun onAnimationStart(animation: Animator) { /*noop*/ }
             })
         binding.sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) { /*noop*/  }
@@ -206,9 +217,11 @@ class CameraActivity : CommonActivity<EmptyViewModel, ActivityCameraBinding>() {
         list.forEach { pop.menu.add(it.toString()) }
         pop.gravity = Gravity.END
         pop.setOnMenuItemClickListener {
-            val txt = it.title.substring(1, it.title.length-1)
-            val arr = txt.split(",")
-            binding.cv.setExpectSize(Size.of(arr[0].trim().toInt(), arr[1].trim().toInt()))
+            val txt = it.title?.substring(1, it.title!!.length-1)
+            val arr = txt?.split(",")
+            binding.cv.setExpectSize(Size.of(arr?.get(0)?.trim()?.toInt() ?: 0,
+                arr?.get(1)?.trim()?.toInt() ?:0
+            ))
             return@setOnMenuItemClickListener true
         }
         pop.show()
@@ -243,13 +256,13 @@ class CameraActivity : CommonActivity<EmptyViewModel, ActivityCameraBinding>() {
         binding.cv.releaseCamera()
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
-        super.onConfigurationChanged(newConfig)
-        L.d("CameraActivity", "onConfigurationChanged")
-    }
+//    override fun onConfigurationChanged(newConfig: Configuration?) {
+//        super.onConfigurationChanged(newConfig)
+//        L.d("CameraActivity", "onConfigurationChanged")
+//    }
 
     private fun takePicture() {
-        val fileToSave = getSavedFile("jpg")
+        val fileToSave = getSavedFile(this,"jpg")
         binding.cv.takePicture(fileToSave, object : CameraPhotoListener {
             override fun onCaptureFailed(throwable: Throwable) {
                 L.e(throwable)
@@ -273,7 +286,7 @@ class CameraActivity : CommonActivity<EmptyViewModel, ActivityCameraBinding>() {
                 0
             }
             binding.cv.setVideoDuration(seconds * 1000)
-            val fileToSave = getSavedFile("mp4")
+            val fileToSave = getSavedFile(this,"mp4")
             binding.cv.startVideoRecord(fileToSave, object : CameraVideoListener {
                 override fun onVideoRecordStart() {
                     toast("Video record START!")

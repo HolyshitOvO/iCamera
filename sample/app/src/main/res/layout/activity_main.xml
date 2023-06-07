@@ -1,128 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="me.shouheng.icamerasample.activity.MainActivity">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:fitsSystemWindows="true"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            android:background="?attr/colorPrimary"
-            android:id="@+id/bar_layout">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:titleTextColor="@android:color/white"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_camera_option"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
-        </com.google.android.material.appbar.AppBarLayout>
+            <RadioButton
+                android:id="@+id/rb_camera1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/main_camera_option_camera1_only" />
+
+            <RadioButton
+                android:id="@+id/rb_camera2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_camera_option_camera2_only" />
+
+            <RadioButton
+                android:id="@+id/rb_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/main_camera_option_camera" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_preview_option"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rb_texture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/main_preview_option_texture_only" />
+
+            <RadioButton
+                android:id="@+id/rb_surface"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_preview_option_surface_only" />
+
+            <RadioButton
+                android:id="@+id/rb_platform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/main_preview_option_platform" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_open"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/main_menu_camera" />
+
+        <!--                app:btn_normal_color="@color/colorAccent"-->
+        <!--                app:btn_corner_radius="40dp"-->
 
         <LinearLayout
-            android:orientation="vertical"
-            android:padding="16dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
-
-            <RadioGroup
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="@string/main_camera_option"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <RadioButton
-                    android:id="@+id/rb_camera1"
-                    android:text="@string/main_camera_option_camera1_only"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <RadioButton
-                    android:id="@+id/rb_camera2"
-                    android:text="@string/main_camera_option_camera2_only"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <RadioButton
-                    android:id="@+id/rb_camera"
-                    android:checked="true"
-                    android:text="@string/main_camera_option_camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </RadioGroup>
-
-            <RadioGroup
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="@string/main_preview_option"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <RadioButton
-                    android:layout_marginTop="8dp"
-                    android:id="@+id/rb_texture"
-                    android:text="@string/main_preview_option_texture_only"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <RadioButton
-                    android:id="@+id/rb_surface"
-                    android:text="@string/main_preview_option_surface_only"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <RadioButton
-                    android:id="@+id/rb_platform"
-                    android:checked="true"
-                    android:text="@string/main_preview_option_platform"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </RadioGroup>
-
-            <me.shouheng.uix.widget.button.NormalButton
-                android:id="@+id/btn_open"
-                android:layout_marginTop="20dp"
-                android:text="@string/main_menu_camera"
-                app:btn_normal_color="@color/colorAccent"
-                app:btn_corner_radius="40dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:paddingTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-
-            </LinearLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingTop="20dp">
 
         </LinearLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 
-</layout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+

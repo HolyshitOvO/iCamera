@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ClearEditText">
+        <attr format="color" name="clear_image_tint_color"/>
+    </declare-styleable>
+    <declare-styleable name="RegexEditText">
+        <!-- 正则输入限制 -->
+        <attr format="string" name="inputRegex"/>
+        <!-- 常用正则类型 -->
+        <attr name="regexType">
+            <!-- 手机号（只能以 1 开头） -->
+            <enum name="mobile" value="0x01"/>
+            <!-- 中文（普通的中文字符） -->
+            <enum name="chinese" value="0x02"/>
+            <!-- 英文（大写和小写的英文） -->
+            <enum name="english" value="0x03"/>
+            <!-- 整数（非 0 开头的数字） -->
+            <enum name="count" value="0x04"/>
+            <!-- 用户名（中文、英文、数字） -->
+            <enum name="name" value="0x05"/>
+            <!-- 非空格字符 -->
+            <enum name="nonnull" value="0x06"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="SwitchButton" >
+        <attr format="reference" name="kswThumbDrawable"/>
+        <attr format="color|reference" name="kswThumbColor"/>
+        <attr format="dimension|reference" name="kswThumbMargin"/>
+        <attr format="dimension|reference" name="kswThumbMarginTop"/>
+        <attr format="dimension|reference" name="kswThumbMarginBottom"/>
+        <attr format="dimension|reference" name="kswThumbMarginLeft"/>
+        <attr format="dimension|reference" name="kswThumbMarginRight"/>
+        <attr format="dimension|reference" name="kswThumbWidth"/>
+        <attr format="dimension|reference" name="kswThumbHeight"/>
+        <attr format="dimension|reference" name="kswThumbRadius"/>
+        <attr format="dimension|reference" name="kswBackRadius"/>
+        <attr format="reference" name="kswBackDrawable"/>
+        <attr format="color|reference" name="kswBackColor"/>
+        <attr format="boolean" name="kswFadeBack"/>
+        <attr format="float" name="kswThumbRangeRatio"/>
+        <attr format="integer" name="kswAnimationDuration"/>
+        <attr format="color|reference" name="kswTintColor"/>
+        <attr format="string" name="kswTextOn"/>
+        <attr format="string" name="kswTextOff"/>
+        <attr format="dimension" name="kswTextThumbInset"/>
+        <attr format="dimension" name="kswTextExtra"/>
+        <attr format="dimension" name="kswTextAdjust"/>
+    </declare-styleable>
+</resources>

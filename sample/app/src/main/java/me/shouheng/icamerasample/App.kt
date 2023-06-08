@@ -8,7 +8,8 @@ import me.shouheng.icamera.config.ConfigurationProvider
 import me.shouheng.icamera.util.L
 import me.shouheng.icamera.util.LogLevel
 import me.shouheng.icamera.util.LogWatcher
-import me.shouheng.icamerasample.activity.MainActivity
+import me.shouheng.utils.UtilsApp
+//import me.shouheng.icamerasample.activity.MainActivity
 //import me.shouheng.uix.common.bean.TextStyleBean
 //import me.shouheng.uix.pages.CrashReportActivity
 //import me.shouheng.utils.app.ResUtils
@@ -30,6 +31,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         application = this
+        UtilsApp.init(this)
         // initialize the vmlib
 //        VMLib.onCreate(this)
         // log

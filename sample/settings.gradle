@@ -1,2 +1,3 @@
-include ':app', ':icamera'
-project(':icamera').projectDir = new File('../icamera')
+include ':app', ':icamera',':utils-ktx',':utils'
+//project(':icamera').projectDir = new File('../icamera')
+rootProject.name='sample'

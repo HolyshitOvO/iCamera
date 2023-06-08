@@ -1,23 +1,30 @@
 package me.shouheng.icamerasample.activity
 
-import android.content.Context
-import android.os.Build
-import android.os.Bundle
-import androidx.annotation.RequiresApi
-import me.shouheng.icamera.config.ConfigurationProvider
-import me.shouheng.icamera.config.creator.impl.*
-import me.shouheng.icamera.util.CameraHelper
-import me.shouheng.icamerasample.R
-import me.shouheng.icamerasample.databinding.ActivityMainBinding
-import me.shouheng.utils.ktx.checkPermissions
-import me.shouheng.utils.ktx.onDebouncedClick
-import me.shouheng.utils.ktx.start
 //import me.shouheng.utils.stability.L
 //import me.shouheng.utils.store.SPUtils
 //import me.shouheng.utils.ui.BarUtils
-import me.shouheng.icamera.util.L
+
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Bundle
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import me.shouheng.icamera.config.ConfigurationProvider
+import me.shouheng.icamera.config.creator.impl.Camera1OnlyCreator
+import me.shouheng.icamera.config.creator.impl.Camera2OnlyCreator
+import me.shouheng.icamera.config.creator.impl.CameraManagerCreatorImpl
+import me.shouheng.icamera.config.creator.impl.CameraPreviewCreatorImpl
+import me.shouheng.icamera.config.creator.impl.SurfaceViewOnlyCreator
+import me.shouheng.icamera.config.creator.impl.TextureViewOnlyCreator
 import me.shouheng.icamera.util.BarUtils
+import me.shouheng.icamera.util.CameraHelper
+import me.shouheng.icamera.util.L
+import me.shouheng.icamerasample.databinding.ActivityMainBinding
 import me.shouheng.icamerasample.utils.SPUtils
+import me.shouheng.utils.ktx.onDebouncedClick
+import me.shouheng.utils.ktx.start
+
 
 /**
  * Main activity
@@ -28,11 +35,18 @@ import me.shouheng.icamerasample.utils.SPUtils
 class MainActivity : BaseActivity() {
 //class MainActivity : CommonActivity<EmptyViewModel, ActivityMainBinding>() {
 
-//    override fun getLayoutResId(): Int = R.layout.activity_main
+    //    override fun getLayoutResId(): Int = R.layout.activity_main
     //    override fun doCreateView(savedInstanceState: Bundle?) {
-    protected val context: Context
+    private val context: Context
         get() = this
 
+    /** 在线激活所需的权限  */
+    private val NEEDED_PERMISSIONS = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.RECORD_AUDIO
+    )
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -87,27 +101,38 @@ class MainActivity : BaseActivity() {
         ConfigurationProvider.get().prepareCamera2(this)
 
         binding.btnOpen.onDebouncedClick { openCamera() }
+
+
+        if (checkPermission(NEEDED_PERMISSIONS[0]) || checkPermission(NEEDED_PERMISSIONS[1]) ||
+            checkPermission(NEEDED_PERMISSIONS[2]) || checkPermission(NEEDED_PERMISSIONS[3])
+        ) {
+            ActivityCompat.requestPermissions(this, NEEDED_PERMISSIONS, 1)
+        }
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED
     }
 
     private fun openCamera() {
 //        checkPermissions({
-            val cameras = CameraHelper.getCameras(context)
-            when {
-                cameras.isEmpty() -> {
-                    toast("No camera on this device")
-                }
-
-                cameras.size == 1 -> {
-                    val face = cameras[0]
-                    ConfigurationProvider.get().defaultCameraFace = face
-                    start(CameraActivity::class.java)
-                    toast("Device only has one camera [$face]")
-                }
-
-                else -> {
-                    start(CameraActivity::class.java)
-                }
+        val cameras = CameraHelper.getCameras(context)
+        when {
+            cameras.isEmpty() -> {
+                toast("No camera on this device")
             }
+
+            cameras.size == 1 -> {
+                val face = cameras[0]
+                ConfigurationProvider.get().defaultCameraFace = face
+                start(CameraActivity::class.java)
+                toast("Device only has one camera [$face]")
+            }
+
+            else -> {
+                start(CameraActivity::class.java)
+            }
+        }
 //        }, Permission.CAMERA, Permission.STORAGE, Permission.MICROPHONE)
     }
 

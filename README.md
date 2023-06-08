@@ -4,27 +4,20 @@
   <a href="http://www.apache.org/licenses/LICENSE-2.0">
     <img src="https://img.shields.io/hexpm/l/plug.svg" alt="License" />
   </a>
-  <a href="https://bintray.com/beta/#/easymark/Android/icamera?tab=overview">
-    <img src="https://img.shields.io/maven-metadata/v/https/s01.oss.sonatype.org/service/local/repo_groups/public/content/com/github/Shouheng88/icamera/maven-metadata.xml.svg" alt="Version" />
-  </a>
-  <a href="https://www.codacy.com/manual/Shouheng88/iCamera?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Shouheng88/iCamera&amp;utm_campaign=Badge_Grade">
-    <img src="https://api.codacy.com/project/badge/Grade/67d7f34109e34c20941ccd1e9ecb6318" alt="Code Grade"/>
-  </a>
-  <a href="https://travis-ci.org/Shouheng88/iCamera">
-    <img src="https://travis-ci.org/Shouheng88/iCamera.svg?branch=master" alt="Build"/>
-  </a>
-    <a href="https://developer.android.com/about/versions/android-4.0.html">
-    <img src="https://img.shields.io/badge/API-14%2B-blue.svg?style=flat-square" alt="Min Sdk Version" />
-  </a>
-   <a href="https://github.com/Shouheng88">
-    <img src="https://img.shields.io/badge/Author-SHW-orange.svg?style=flat-square" alt="Author" />
-  </a>
-  <a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=2711a5fa2e3ecfbaae34bd2cf2c98a5b25dd7d5cc56a3928abee84ae7a984253">
-    <img src="https://img.shields.io/badge/QQ%E7%BE%A4-1018235573-orange.svg?style=flat-square" alt="QQ Group" />
+  <a href="https://developer.android.com/about/versions/android-4.0.html">
+    <img src="https://img.shields.io/badge/API-21%2B-blue.svg?style=flat-square" alt="Min Sdk Version" />
   </a>
 </P>
 
 ## 1、相机库简介
+
+更新 Gradle 7.5
+
+第三方包引入本地依赖
+
+去掉 Support 包，全部使用 AndroidX
+
+能正常使用，Pref可能删掉了，没弄回来，有些地方报error
 
 该相机库功能全面，支持拍照或者视频录制所需的全部基础功能；此外，该相机库提供了可供用户进行定制的接口，你可以根据自己的需求对其中的算法和策略进行个性化定制。
 
@@ -56,20 +49,6 @@
 - [体验 Demo](sample/sample.apk)
 
 ## 2、使用
-
-### 2.1 引入依赖
-
-该库已经上传到了 MavenCentral 仓库。你需要在项目的 Gradle 中加入 MavenCentral 仓库：
-
-```groovy
-repositories { mavenCentral() }
-```
-
-然后，在项目依赖中直接引用我们的库即可：
-
-```groovy
-implementation "com.github.Shouheng88:icamera:${latest-version}"
-```
 
 ### 2.2 使用相机控件
 
@@ -140,22 +119,3 @@ ConfigurationProvider.get().cameraManagerCreator = Camera1OnlyCreator()
 
 - [作者翻译的 Camera2 文档](https://github.com/Shouheng88/Android-notes/blob/master/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/Android%E7%9B%B8%E6%9C%BACamera2%E8%B5%84%E6%96%99.md)
 
-- [更新日志](CHANGELOG.md)
-
-## License
-
-```
-Copyright (c) 2019-2021 SHW
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
